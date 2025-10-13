@@ -12,7 +12,6 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-
 // ★★★ 修正不要、このルート定義で 'post.store' が有効です ★★★
 // ルート名は post. で統一されているため、Blade側を post.store に合わせましょう。
 Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
