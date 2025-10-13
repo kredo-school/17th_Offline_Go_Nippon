@@ -5,10 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Post;
 // PostImageモデル（画像を保存する中間テーブルに対応するモデル）をここでuseします
-use App\Models\PostImage; 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\DB; 
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log; // エラーログ用にインポート
 
 class PostController extends Controller
@@ -29,7 +28,8 @@ class PostController extends Controller
         return view('users.posts.create')->with('all_categories');
     }
 
-    public function store(Request $request){
+    public function store(Request $request)
+    {
         // ★★★ 複数画像と全フィールドに対応したバリデーション ★★★
         // $request->validate([
         //     'title' => 'required|string|max:150',
@@ -81,9 +81,9 @@ class PostController extends Controller
             // }
             
             // images()リレーションを使用して画像を保存 (Postモデルにリレーションimages()が必要です)
-            // $post->images()->createMany($image_data_array); 
+            // $post->images()->createMany($image_data_array);
             // NOTE: ここではimages()リレーションの存在が前提です。
-            
+
             // 3. カテゴリの保存
     //         $category_post = [];
     //         foreach($request->category as $category_id) {
@@ -103,7 +103,7 @@ class PostController extends Controller
     //         return redirect()->back()->with('error', '投稿の作成に失敗しました。詳細: ' . $e->getMessage())->withInput();
     //     }
     }
-    
+
     public function show($id)
     {
         // $post = $this->post->findOrFail($id);
