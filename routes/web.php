@@ -9,3 +9,11 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/profile', function () {
+    return view('users.profile.show');
+});
+
+Route::get('/show2', function () {
+    return view('users.profile.show2');
+});
