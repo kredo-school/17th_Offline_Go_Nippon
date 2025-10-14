@@ -18,6 +18,7 @@ Route::get('/profile', function () {
 
 Route::get('/show2', function () {
     return view('users.profile.show2');
+});
 // ★★★ 修正不要、このルート定義で 'post.store' が有効です ★★★
 // ルート名は post. で統一されているため、Blade側を post.store に合わせましょう。
 Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
@@ -26,10 +27,10 @@ Route::get('/post/{id}/show', [PostController::class, 'show'])->name('post.show'
 Route::get('/post/{id}/edit', [PostController::class, 'edit'])->name('post.edit');
 Route::patch('/post/{id}/update', [PostController::class, 'update'])->name('post.update');
 Route::delete('/post/{id}/destroy', [PostController::class, 'destroy'])->name('post.destroy');
-Route::get('/users/profile', function () {
-    return view('users.profile.edit');
-});
+    Route::get('/users/profile', function () {
+        return view('users.profile.edit');
+    });
 
-Route::get('/users/posts', function () {
-    return view('users.posts.show');
-});
+    Route::get('/users/posts', function () {
+        return view('users.posts.show');
+    });

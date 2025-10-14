@@ -1,0 +1,25 @@
+.btn-outline {
+    border-color: #F1BDB2;
+    color: #F1BDB2;
+}
+
+.btn-outline:hover {
+    background-color: #F1BDB2;
+}
+
+h5, span, label {
+    color: #9F6B46;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    background-color: rgba(159, 107, 70, 0.2);
+    border-radius: 50%;
+}
+
+.card-header {
+    background: rgba(159, 107, 70, 0.2);
+}
+
+.nav-link.active {
+        color: #9F6B46 !important;
+}
