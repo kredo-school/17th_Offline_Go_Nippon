@@ -29,3 +29,7 @@ Route::delete('/post/{id}/destroy', [PostController::class, 'destroy'])->name('p
 Route::get('/users/profile', function () {
     return view('users.profile.edit');
 });
+
+Route::get('/users/posts', function () {
+    return view('users.posts.show');
+});
