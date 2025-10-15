@@ -13,8 +13,8 @@
                 <div class="row g-2  align-items-end">
                     <div class="col-6 col-md-5">
                         <label for="" class="form-label">Prefecture</label>
-                        <select name="prefecture" class="form-select">
-                            <option value="" selected>Select</option>
+                        <select name="prefecture" class="form-select text-muted">
+                            <option value="" selected disabled hidden>Select</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -22,8 +22,8 @@
                     </div>
                     <div class="col-6 col-md-5">
                         <label for="" class="form-label">Category</label>
-                        <select name="category" class="form-select">
-                            <option value="" selected>Select</option>
+                        <select name="category" class="form-select text-muted">
+                            <option value="" selected disabled hidden>Select</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -56,7 +56,7 @@
                                             <br>
                                             &nbsp;
                                             >>>
-                                            <a href="">Travel</a>
+                                            <a href="" class="text-decoration-none">Travel</a>
                                         </span>
                                         <div class="badge rounded-pill">
                                             <span class="" style="background: rgb(236, 239, 255);">123</span>
@@ -68,7 +68,7 @@
                                             <br>
                                             &nbsp;
                                             >>>
-                                            <a href="">Food</a>
+                                            <a href="" class="text-decoration-none">Food</a>
                                         </span>
                                         <div class="badge rounded-pill">
                                             <span class="" style="background: rgb(236, 239, 255);">98</span>
@@ -80,7 +80,7 @@
                                             <br>
                                             &nbsp;
                                             >>>
-                                            <a href="">Culture</a>
+                                            <a href="" class="text-decoration-none">Culture</a>
                                         </span>
                                         <div class="badge rounded-pill">
                                             <span class="" style="background: rgb(236, 239, 255);">78</span>
@@ -92,7 +92,7 @@
                                             <br>
                                             &nbsp;
                                             >>>
-                                            <a href="">Nature</a>
+                                            <a href="" class="text-decoration-none">Nature</a>
                                         </span>
                                         <div class="badge rounded-pill">
                                             <span class="" style="background: rgb(236, 239, 255);">45</span>
@@ -104,7 +104,7 @@
                                             <br>
                                             &nbsp;
                                             >>>
-                                            <a href="">Shopping</a>
+                                            <a href="" class="text-decoration-none">Shopping</a>
                                         </span>
                                         <div class="badge rounded-pill">
                                             <span class="" style="background: rgb(236, 239, 255);">23</span>
@@ -125,7 +125,7 @@
                                             <br>
                                             &nbsp;
                                             >>>
-                                            <a href="">Tokyo</a>
+                                            <a href="" class="text-decoration-none">Tokyo</a>
                                         </span>
                                         <div class="badge rounded-pill">
                                             <span class="" style="background: rgb(236, 239, 255);">123</span>
@@ -137,7 +137,7 @@
                                             <br>
                                             &nbsp;
                                             >>>
-                                            <a href="">Kyoto</a>
+                                            <a href="" class="text-decoration-none">Kyoto</a>
                                         </span>
                                         <div class="badge rounded-pill">
                                             <span class="" style="background: rgb(236, 239, 255);">66</span>
@@ -149,7 +149,7 @@
                                             <br>
                                             &nbsp;
                                             >>>
-                                            <a href="">Okinawa</a>
+                                            <a href="" class="text-decoration-none">Okinawa</a>
                                         </span>
                                         <div class="badge rounded-pill">
                                             <span class="" style="background: rgb(236, 239, 255);">54</span>
@@ -161,7 +161,7 @@
                                             <br>
                                             &nbsp;
                                             >>>
-                                            <a href="">Fukuoka</a>
+                                            <a href="" class="text-decoration-none">Fukuoka</a>
                                         </span>
                                         <div class="badge rounded-pill">
                                             <span class="" style="background: rgb(236, 239, 255);">45</span>
@@ -173,7 +173,7 @@
                                             <br>
                                             &nbsp;
                                             >>>
-                                            <a href="">Kanagawa</a>
+                                            <a href="" class="text-decoration-none">Kanagawa</a>
                                         </span>
                                         <div class="badge rounded-pill">
                                             <span class="" style="background: rgb(236, 239, 255);">12</span>

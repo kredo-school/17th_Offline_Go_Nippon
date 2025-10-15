@@ -1,3 +1,8 @@
+body {
+    font-family: 'Source Serif Pro', serif; 
+    background-color: #fffffe;
+}
+
 .btn-outline {
     border-color: #F1BDB2;
     color: #F1BDB2;
