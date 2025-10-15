@@ -20,7 +20,7 @@ Route::get('/show2', function () {
     return view('users.profile.show2');
 });
 
-Route::get('profile/trip-map', function(){
+Route::get('profile/trip-map', function () {
     return view('users.profile.trip-map');
 });
 
