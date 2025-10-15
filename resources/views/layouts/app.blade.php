@@ -39,14 +39,6 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
     {{-- D3.js --}}
     <script src="https://d3js.org/d3.v7.min.js"></script>
 
-    <style>
-        .brand-text {
-            font-family: 'Source Serif Pro', serif;
-            color: #4a3b2d;
-            font-style: italic;
-            letter-spacing: 0.5px;
-        }
-    </style>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
@@ -113,7 +105,7 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
                                     aria-labelledby="account-dropdown">
                                     {{-- @can('admin') --}}
                                         <a href="#" class="dropdown-item"><i class="fa-solid fa-lock me-2"></i></i>Admin</a>
-                                    {{-- @can('admin') --}}
+                                    {{-- @endcan --}}
 
                                     <hr class="dropdown-divider">
                                     <a href="#" class="dropdown-item"><i class="fa-solid fa-user me-2"></i>Profile</a>

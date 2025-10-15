@@ -28,3 +28,11 @@ h5, span, label {
 .nav-link.active {
         color: #9F6B46 !important;
 }
+
+/* navber */
+.brand-text {
+            font-family: 'Source Serif Pro', serif;
+            color: #4a3b2d;
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
