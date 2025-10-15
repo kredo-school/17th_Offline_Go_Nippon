@@ -4,8 +4,8 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/favorites', function () {
-    return view('favorite');
+Route::get('/', function () {
+    return view('home');
 });
 
 Auth::routes();
@@ -31,6 +31,3 @@ Route::get('/users/profile', function () {
     return view('users.profile.edit');
 });
 
-Route::get('/users/posts', function () {
-    return view('users.posts.show');
-});
