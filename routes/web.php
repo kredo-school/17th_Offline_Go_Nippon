@@ -4,8 +4,8 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/favorites', function () {
+    return view('favorite');
 });
 
 Auth::routes();
@@ -34,4 +34,8 @@ Route::patch('/post/{id}/update', [PostController::class, 'update'])->name('post
 Route::delete('/post/{id}/destroy', [PostController::class, 'destroy'])->name('post.destroy');
 Route::get('/users/profile', function () {
     return view('users.profile.edit');
+});
+
+Route::get('/users/posts', function () {
+    return view('users.posts.show');
 });
