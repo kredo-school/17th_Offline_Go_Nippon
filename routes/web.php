@@ -18,11 +18,10 @@ Route::get('admin/categories', function () {
     return view('admin.categories.index');
 });
 
-//Analytics
+// Analytics
 Route::get('users/analytics', function () {
     return view('users.analytics.index');
 });
-
 
 Auth::routes();
 
