@@ -1,4 +1,4 @@
-@extends('layouts.app') 
+@extends('layouts.admin.app') 
 {{-- 共通レイアウト layouts/app.blade.php を継承 --}}
 
 @section('title', 'Categories Management') 
