@@ -38,29 +38,36 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
 
     {{-- D3.js --}}
     <script src="https://d3js.org/d3.v7.min.js"></script>
+
+    <style>
+        .brand-text {
+            font-family: 'Source Serif Pro', serif;
+            color: #4a3b2d;
+            font-style: italic;
+            letter-spacing: 0.5px;
+        }
+    </style>
 </head>
 <body>
     <div id="app">
-        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+        <nav class="navbar navbar-expand-lg shadow-sm fixed-top py-1" style="background-color:#fbefe5;">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Laravel') }}
+                <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
+                    <img src="{{ asset('images/image_480.png') }}" alt="Logo" width="50" class="me-2">
+                    <span class="brand-text fw-bold fs-1 ms-2">Go Nippon!</span>
                 </a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
+
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav me-auto">
-
-                    </ul>
-
                     <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
+                    <ul class="navbar-nav ms-auto align-items-center gap-1">
                         <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
+                        {{-- @guest --}}
+                            {{-- @if (Route::has('login'))
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
@@ -70,32 +77,62 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
                                 </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
+                            @endif --}}
+                        {{-- @else --}}
+                                <li class="nav-item">
+                                <a href="" class="nav-link fs-2" style="color:#9F6B46;">
+                                    <i class="fa-solid fa-circle-plus"></i>
                                 </a>
+                            </li>
 
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
+                            <li class="nav-item">
+                                <a href="" class="nav-link fs-2" style="color:#9F6B46;">
+                                    <i class="fa-regular fa-comment "></i>
+                                </a>
+                            </li>
 
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
+                            <li class="nav-item">
+                                <a href="" class="nav-link fs-3" style="color:#9F6B46;">
+                                    <i class="fa-regular fa-heart fa-lg"></i>
+                                </a>
+                            </li>
+
+                            <li class="nav-item dropdown">
+                                <button class="btn shadow-none nav-link d-flex align-items-center"
+                                    id="account-dropdown" data-bs-toggle="dropdown" aria-expanded="false"
+                                    style="color:#9F6B46;">
+                                    {{-- @if (Auth::user()->avatar) --}}
+                                        <img src="https://placehold.co/40x40" class="rounded-circle" alt="user">
+                                    {{-- @else --}}
+                                        {{-- <i class="fa-solid fa-circle-user"></i> --}}
+                                    {{-- @endif --}}
+                                </button>
+
+                                <div class="dropdown-menu dropdown-menu-end shadow border-0 rounded-3 p-2"
+                                    aria-labelledby="account-dropdown">
+                                    {{-- @can('admin') --}}
+                                        <a href="#" class="dropdown-item"><i class="fa-solid fa-lock me-2"></i></i>Admin</a>
+                                    {{-- @can('admin') --}}
+
+                                    <hr class="dropdown-divider">
+                                    <a href="#" class="dropdown-item"><i class="fa-solid fa-user me-2"></i>Profile</a>
+                                    <a href="{{ route('logout') }}"
+                                        onclick="event.preventDefault();
+                                                        document.getElementById('logout-form').submit();" class="dropdown-item text-danger"><i
+                                            class="fa-solid fa-right-from-bracket me-2"></i> {{ __('Logout') }}</a>
+                                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                                            @csrf
+                                            </form>
+                                    <a href="#" class="dropdown-item"><i class="fa-solid fa-toggle-on me-2"></i>Notification</a>
                                 </div>
                             </li>
-                        @endguest
+                        {{-- @endguest --}}
                     </ul>
-                </div>
+                </div>  
             </div>
         </nav>
 
-        <main class="py-4">
+        <main class="mt-5 py-4">
             @yield('content')
         </main>
     </div>
