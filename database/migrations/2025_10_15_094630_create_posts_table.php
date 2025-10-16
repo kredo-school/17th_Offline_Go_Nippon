@@ -12,13 +12,13 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
            
-            $table->uuid('id')->primary(); 
+            $table->id();
             
-            $table->foreignId('user_id')->constrained()->onDelete('cascade'); 
+            $table->unsignedBigInteger('user_id');
             
             $table->string('title', 50);
             
-            $table->string('prefecture', 50);
+            $table->unsignedBigInteger('prefecture_id');
         
             $table->date('visited_at'); 
             
@@ -28,7 +28,9 @@ return new class extends Migration
             
             $table->text('content');
             
-            $table->timestamp('created_at')->default(DB::raw('CURRENT_TIMESTAMP'));
+            $table->timestamps();
+
+             $table->foreign('user_id')->references('id')->on('users');
             
         });
     }
