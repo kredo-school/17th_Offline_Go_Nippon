@@ -23,6 +23,10 @@ Route::get('users/analytics', function () {
     return view('users.analytics.index');
 });
 
+route::get('/message', function () {
+    return view('message');
+});
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
