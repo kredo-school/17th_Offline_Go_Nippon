@@ -90,3 +90,45 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
 }
 
+.message-users{
+    background-color: #ffffff;
+    transition: all 0.2s ease;
+}
+
+.message-users p{
+    color: #A9A9A9;
+}
+
+.message-users:hover{
+    background-color:#F1BDB2;
+    transform: translateY(-3px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+
+}
+
+.message-users:hover p{
+    color: #9F6B46;
+}
+
+.message-users .notice{
+    background-color: #F1BDB2;
+}
+
+.message-users:hover .notice{
+    background-color: #ffffff;
+}
+
+.message-users i{
+    color: #F1BDB2;
+}
+
+.message-users:hover i{
+    color: #ffffff;
+}
+
+.message-board{
+    background-color: #FFFBEB;
+    width: 800px;
+    height: 545px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
+}

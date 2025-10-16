@@ -8,6 +8,10 @@ Route::get('/favorites', function () {
     return view('favorite');
 });
 
+route::get('/message', function(){
+    return view('message');
+});
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
