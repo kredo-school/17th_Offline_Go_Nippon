@@ -8,7 +8,7 @@ Route::get('/favorites', function () {
     return view('favorite');
 });
 
-route::get('/message', function(){
+route::get('/message', function () {
     return view('message');
 });
 
