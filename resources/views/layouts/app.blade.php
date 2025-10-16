@@ -125,6 +125,82 @@ href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
             </div>
         </nav>
 
+        <nav class="navbar fixed-top d-flex d-lg-none" style="background-color:#fbefe5;">
+            <div class="container d-flex justify-content-between align-items-center">
+
+                <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
+                    <img src="{{ asset('images/image_480.png') }}" alt="Logo" width="40" class="me-2">
+                    <span class="brand-text fw-bold fs-3">Go Nippon!</span>
+                </a>
+
+                <button class="btn p-0 border-0 bg-transparent" type="button"
+                        data-bs-toggle="offcanvas" data-bs-target="#mobileMenu">
+                    <i class="fa-solid fa-bars fa-2x"></i>
+                </button>
+            </div>
+        </nav>
+
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="mobileMenu" style="border-left:2px solid #d1a07d;">
+    
+            <div class="offcanvas-header border-bottom" style="background-color:#fff5ee;">
+                <div class="d-flex align-items-center">
+                    <img src="https://placehold.co/50x50" class="rounded-circle me-2" alt="user">
+                    <span class="fw-bold" style="color:#9F6B46;">NAME</span>
+                </div>
+                <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+
+            <div class="offcanvas-body d-flex flex-column align-items-center justify-content-start text-center pt-4">
+                <ul class="list-unstyled w-100">
+                    <li class="mb-3">
+                        <a href="" class="menu-link nav-text-brown">
+                            <i class="fa-solid fa-store me-3"></i> Home
+                        </a>
+                    </li>
+                    <li class="mb-3">
+                        <a href="" class="menu-link nav-text-brown">
+                            <i class="fa-solid fa-circle-plus me-3"></i> Create Post
+                        </a>
+                    </li>
+                    <li class="mb-3">
+                        <a href="" class="menu-link nav-text-brown">
+                            <i class="fa-regular fa-heart me-3"></i> Notifications
+                        </a>
+                    </li>
+                    <li class="mb-3">
+                        <a href="" class="menu-link nav-text-brown">
+                            <i class="fa-regular fa-comment me-3"></i> Messages
+                        </a>
+                    </li>
+                    <li class="mb-3">
+                        <a href="" class="menu-link nav-text-brown">
+                            <i class="fa-regular fa-star me-3"></i> Favorite Post
+                        </a>
+                    </li>
+                    <li class="mb-3">
+                        <a href="" class="menu-link nav-text-brown">
+                            <i class="fa-solid fa-toggle-on me-3"></i> Notification
+                        </a>
+                    </li>
+                </ul>
+
+                <div class="d-flex justify-content-around mt-3 w-100">
+                    <a href="{{ route('logout') }}" 
+                    onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                    class="btn" style="border: 2px solid #F1BDB2; color: #F1BDB2; font-weight: bold; background-color: transparent; transition: 0.3s;">
+                        <i class="fa-solid fa-right-from-bracket"></i> Logout
+                    </a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                        @csrf
+                    </form>
+
+                    <a href="" class="btn" style="background-color:#F1BDB2; color:white; font-weight:bold; transition:0.3s;">
+                        <i class="fa-solid fa-lock"></i> Admin
+                    </a>
+                </div>
+            </div>
+        </div>
+
         <main class="mt-5 py-4">
             @yield('content')
         </main>
