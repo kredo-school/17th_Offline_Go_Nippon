@@ -4,7 +4,6 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-
 // Admin
 Route::get('admin/users', function () {
     return view('admin.users.index');
@@ -43,8 +42,6 @@ Route::get('/show2', function () {
 Route::get('profile/trip-map', function () {
     return view('users.profile.trip-map');
 });
-
-
 
 Route::middleware(['auth'])->group(function () {
     Route::resource('posts', PostController::class);

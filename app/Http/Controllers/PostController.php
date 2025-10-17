@@ -43,10 +43,10 @@ class PostController extends Controller
                 }
             }
         }
-        
-         $visitedAt = $validated['date'] . ' ' . str_pad($validated['time_hour'], 2, '0', STR_PAD_LEFT) . ':' . str_pad($validated['time_min'], 2, '0', STR_PAD_LEFT) . ':00';
 
-        $post = new Post();
+        $visitedAt = $validated['date'].' '.str_pad($validated['time_hour'], 2, '0', STR_PAD_LEFT).':'.str_pad($validated['time_min'], 2, '0', STR_PAD_LEFT).':00';
+
+        $post = new Post;
         $post->title = $validated['title'];
         $post->content = $validated['content'];
         $post->prefecture_id = $validated['prefecture_id'];
@@ -56,10 +56,9 @@ class PostController extends Controller
         $post->image = json_encode($imagePaths);
         $post->save();
 
-        if (!empty($validated['category'])) {
-        $post->categories()->sync(array_filter($validated['category']));
-    }
-
+        if (! empty($validated['category'])) {
+            $post->categories()->sync(array_filter($validated['category']));
+        }
 
         return redirect()->route('posts.index')->with('success', '投稿を作成しました！');
     }
@@ -111,6 +110,7 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::with('categories', 'user')->latest()->get();
+
         return view('users.posts.show', compact('posts'));
     }
 }

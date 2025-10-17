@@ -9,10 +9,10 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-        public function up()
+    public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->longText('images')->nullable(); 
+            $table->longText('images')->nullable();
         });
     }
 
@@ -22,5 +22,4 @@ return new class extends Migration
             $table->dropColumn('images');
         });
     }
-
 };
