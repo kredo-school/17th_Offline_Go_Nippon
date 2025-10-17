@@ -4,6 +4,7 @@ use App\Http\Controllers\PostController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+
 // Admin
 Route::get('admin/users', function () {
     return view('admin.users.index');
@@ -43,8 +44,12 @@ Route::get('profile/trip-map', function () {
     return view('users.profile.trip-map');
 });
 
-// ★★★ 修正不要、このルート定義で 'post.store' が有効です ★★★
-// ルート名は post. で統一されているため、Blade側を post.store に合わせましょう。
+
+
+Route::middleware(['auth'])->group(function () {
+    Route::resource('posts', PostController::class);
+});
+
 Route::get('/post/create', [PostController::class, 'create'])->name('post.create');
 Route::post('/post/store', [PostController::class, 'store'])->name('post.store');
 Route::get('/post/{id}/show', [PostController::class, 'show'])->name('post.show');

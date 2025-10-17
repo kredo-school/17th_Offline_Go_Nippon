@@ -4,7 +4,7 @@
 
 <style>
     /* -------------------------------------- */
-    /* ** CUSTOM CSS (Create Postから流用) ** */
+    /* ** CUSTOM CSS FOR UNIFIED DESIGN ** */
     /* -------------------------------------- */
 
     /* Global Fonts and Background */
@@ -27,10 +27,10 @@
     /* Form Container (Wide Card) */
     .post-container {
         width: 100%;
-        max-width: 760px;
+        max-width: 760px; /* Maintains the double-width requirement */
         padding: 40px 30px;
         background-color: white; 
-        border: 1px solid #9F6B46;
+        border: 1px solid #9F6B46; /* Brown border */
         border-radius: 5px;
         box-sizing: border-box;
     }
@@ -70,7 +70,7 @@
         border: 1px solid #ced4da; 
         font-size: 1rem;
         width: 100%;
-        color: #9F6B46;
+        color: #9F6B46; /* Text color is brown */
     }
     
     textarea.post-input {
@@ -206,7 +206,7 @@
     }
     .btn-cancel {
         background-color: white;
-        color:  #F8C7B3;
+        color: #F8C7B3;
         border: 1px solid  #F8C7B3;
         padding: 8px 25px;
         font-weight: 600;
@@ -220,21 +220,6 @@
         font-weight: 600;
         border-radius: 5px;
     }
-    
-    .selected-image-preview {
-        /* 既存の画像を表示するためのスタイル */
-        width: 100px;
-        height: 100px;
-        border-radius: 5px;
-        overflow: hidden;
-        margin-right: 15px;
-        position: relative;
-    }
-    .selected-image-preview img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
 
 </style>
 
@@ -243,19 +228,16 @@
     <div class="post-container">
         
         <div class="post-header">
-            <i class="fa-solid fa-pen-to-square"></i> Edit Post
+            <i class="fa-solid fa-circle-plus"></i> Create Post
         </div>
 
-        {{-- フォームアクションを 'post.update' ルートに設定し、投稿IDを渡す --}}
-        <form method="POST" action="{{ route('post.update', $post->id) }}" enctype="multipart/form-data">
+        {{-- Set the action to the 'post.store' route defined in your routes/web.php --}}
+        <form method="POST" action="{{ route('post.store') }}" enctype="multipart/form-data">
             @csrf
-            {{-- PATCHメソッドを指定 --}}
-            @method('PATCH')
 
             <div class="mb-3">
                 <label for="title" class="form-label post-label">Title</label>
-                {{-- 既存データまたはold()の値を表示 --}}
-                <input id="title" type="text" class="form-control post-input @error('title') is-invalid @enderror" name="title" value="{{ old('title', $post->title) }}" required autofocus placeholder="Arakurayamasengen Park">
+                <input id="title" type="text" class="form-control post-input @error('title') is-invalid @enderror" name="title" value="{{ old('title') }}" required autofocus placeholder="Arakurayamasengen Park">
 
                 @error('title')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -264,8 +246,7 @@
 
             <div class="mb-3">
                 <label for="description" class="form-label post-label">Description</label>
-                {{-- 既存データまたはold()の値を表示 --}}
-                <textarea id="description" class="form-control post-input @error('description') is-invalid @enderror" name="description" rows="4" required placeholder="Describe your experience or place details">{{ old('description', $post->description) }}</textarea>
+                <textarea id="description" class="form-control post-input @error('description') is-invalid @enderror" name="description" rows="4" required placeholder="Approximately 650 cherry trees are planted in the park, and in the spring a cherry blossom festival is held, attracting many visitors.">{{ old('description') }}</textarea>
 
                 @error('description')
                     <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
@@ -275,8 +256,7 @@
             <div class="row mb-3">
                 <div class="col-md-6 mb-3 mb-md-0">
                     <label for="date" class="form-label post-label">Date</label>
-                    {{-- 既存データまたはold()の値を表示 --}}
-                    <input id="date" type="date" class="form-control post-input @error('date') is-invalid @enderror" name="date" value="{{ old('date', $post->date) }}">
+                    <input id="date" type="date" class="form-control post-input @error('date') is-invalid @enderror" name="date" value="{{ old('date', date('Y-m-d')) }}">
                     @error('date')
                         <span class="invalid-feedback" role="alert"><strong>{{ $message }}</strong></span>
                     @enderror
@@ -285,108 +265,123 @@
                 <div class="col-md-6">
                     <label for="time" class="form-label post-label">Time</label>
                     <div class="d-flex align-items-center">
-                        {{-- 既存データまたはold()の値を表示 --}}
-                        <input type="number" class="form-control post-input time-input @error('time_hour') is-invalid @enderror" name="time_hour" value="{{ old('time_hour', $post->time_hour) }}" min="0" max="23">
+                        <input type="number" class="form-control post-input time-input @error('time_hour') is-invalid @enderror" name="time_hour" value="{{ old('time_hour', '0') }}" min="0" max="23">
                         <span class="time-unit">hour</span>
-                        {{-- 既存データまたはold()の値を表示 --}}
-                        <input type="number" class="form-control post-input time-input @error('time_min') is-invalid @enderror" name="time_min" value="{{ old('time_min', $post->time_min) }}" min="0" max="59">
+                        <input type="number" class="form-control post-input time-input @error('time_min') is-invalid @enderror" name="time_min" value="{{ old('time_min', '50') }}" min="0" max="59">
                         <span class="time-unit">min</span>
                     </div>
                 </div>
             </div>
 
             <div class="row mb-3">
-                {{-- Categories Field --}}
-                <div class="col-md-6">
-                    <label for="categories" class="form-label post-label">Categories (up to 3)</label>
-                    <div class="d-flex gap-2">
-                        
-                        @php
-                            // old()データが存在しない場合は既存の選択済みカテゴリを使用
-                            $old_categories = old('category') ?? $selected_categories; 
-                            $categories = ['mountain', 'cafe', 'temple', 'tour', 'sea', 'culture', 'food'];
-                        @endphp
-
-                        @for ($i = 0; $i < 3; $i++)
-                            <select class="form-select post-input @error('category.' . $i) is-invalid @enderror" name="category[]">
-                                <option value="" disabled {{ !isset($old_categories[$i]) ? 'selected' : '' }}>Select Category {{ $i + 1 }}</option>
-                                @foreach ($categories as $category_value)
-                                    <option value="{{ $category_value }}" 
-                                        {{ (isset($old_categories[$i]) && $old_categories[$i] == $category_value) ? 'selected' : '' }}>
-                                        {{ ucfirst($category_value) }}
-                                    </option>
-                                @endforeach
-                            </select>
-                        @endfor
-                        
-                    </div>
-                </div>
+               <div class="col-md-7">
+    <label for="categories" class="form-label post-label">Categories (up to 3)</label>
+    <div class="d-flex gap-2">
+        
+        {{-- カテゴリ 1 (category[]) --}}
+        <select class="form-select post-input @error('category.0') is-invalid @enderror" name="category[]">
+            <option value="mountain" {{ old('category.0') == 'mountain' ? 'selected' : '' }}>Mountain</option>
+            <option value="cafe" {{ old('category.0') == 'cafe' ? 'selected' : '' }}>Cafe</option>
+            <option value="temple" {{ old('category.0') == 'temple' ? 'selected' : '' }}>Temple</option>
+            <option value="tour" {{ old('category.0') == 'tour' ? 'selected' : '' }}>Tour</option>
+            <option value="sea" {{ old('category.0') == 'sea' ? 'selected' : '' }}>Sea</option>
+            <option value="culture" {{ old('category.0') == 'culture' ? 'selected' : '' }}>Culture</option>
+            <option value="food" {{ old('category.0') == 'food' ? 'selected' : '' }}>Food</option>
+        </select>
+        
+        {{-- カテゴリ 2 (category[]) --}}
+        <select class="form-select post-input @error('category.1') is-invalid @enderror" name="category[]">
+            <option value="mountain" {{ old('category.1') == 'mountain' ? 'selected' : '' }}>Mountain</option>
+            <option value="cafe" {{ old('category.1') == 'cafe' ? 'selected' : '' }}>Cafe</option>
+            <option value="temple" {{ old('category.1') == 'temple' ? 'selected' : '' }}>Temple</option>
+            <option value="tour" {{ old('category.1') == 'tour' ? 'selected' : '' }}>Tour</option>
+            <option value="sea" {{ old('category.1') == 'sea' ? 'selected' : '' }}>Sea</option>
+            <option value="culture" {{ old('category.1') == 'culture' ? 'selected' : '' }}>Culture</option>
+            <option value="food" {{ old('category.1') == 'food' ? 'selected' : '' }}>Food</option>
+        </select>
+        
+        {{-- カテゴリ 3 (category[]) --}}
+        <select class="form-select post-input @error('category.2') is-invalid @enderror" name="category[]">
+            <option value="mountain" {{ old('category.2') == 'mountain' ? 'selected' : '' }}>Mountain</option>
+            <option value="cafe" {{ old('category.2') == 'cafe' ? 'selected' : '' }}>Cafe</option>
+            <option value="temple" {{ old('category.2') == 'temple' ? 'selected' : '' }}>Temple</option>
+            <option value="tour" {{ old('category.2') == 'tour' ? 'selected' : '' }}>Tour</option>
+            <option value="sea" {{ old('category.2') == 'sea' ? 'selected' : '' }}>Sea</option>
+            <option value="culture" {{ old('category.2') == 'culture' ? 'selected' : '' }}>Culture</option>
+            <option value="food" {{ old('category.2') == 'food' ? 'selected' : '' }}>Food</option>
+        </select>
+    </div>
+</div>
                 
                 {{-- Prefecture Field (47 Prefectures) --}}
-                <div class="col-md-6">
+                <div class="col-md-5">
                     <label for="prefecture" class="form-label post-label">Prefecture</label>
                     <select class="form-select post-input @error('prefecture') is-invalid @enderror" name="prefecture" id="prefecture" required>
-                        <option value="" disabled {{ !old('prefecture') && !$post->prefecture ? 'selected' : '' }}>Select Prefecture</option>
+
                         
-                        {{-- 47都道府県のリストをここに展開（create_post.blade.phpから流用） --}}
                         <optgroup label="Hokkaido & Tohoku">
-                            <option value="Hokkaido" {{ old('prefecture', $post->prefecture) == 'Hokkaido' ? 'selected' : '' }}>Hokkaido</option>
-                            <option value="Aomori" {{ old('prefecture', $post->prefecture) == 'Aomori' ? 'selected' : '' }}>Aomori</option>
-                            <option value="Iwate" {{ old('prefecture', $post->prefecture) == 'Iwate' ? 'selected' : '' }}>Iwate</option>
-                            <option value="Miyagi" {{ old('prefecture', $post->prefecture) == 'Miyagi' ? 'selected' : '' }}>Miyagi</option>
-                            <option value="Akita" {{ old('prefecture', $post->prefecture) == 'Akita' ? 'selected' : '' }}>Akita</option>
-                            <option value="Yamagata" {{ old('prefecture', $post->prefecture) == 'Yamagata' ? 'selected' : '' }}>Yamagata</option>
-                            <option value="Fukushima" {{ old('prefecture', $post->prefecture) == 'Fukushima' ? 'selected' : '' }}>Fukushima</option>
+                            <option value="Hokkaido" {{ old('prefecture') == 'Hokkaido' ? 'selected' : '' }}>Hokkaido</option>
+                            <option value="Aomori" {{ old('prefecture') == 'Aomori' ? 'selected' : '' }}>Aomori</option>
+                            <option value="Iwate" {{ old('prefecture') == 'Iwate' ? 'selected' : '' }}>Iwate</option>
+                            <option value="Miyagi" {{ old('prefecture') == 'Miyagi' ? 'selected' : '' }}>Miyagi</option>
+                            <option value="Akita" {{ old('prefecture') == 'Akita' ? 'selected' : '' }}>Akita</option>
+                            <option value="Yamagata" {{ old('prefecture') == 'Yamagata' ? 'selected' : '' }}>Yamagata</option>
+                            <option value="Fukushima" {{ old('prefecture') == 'Fukushima' ? 'selected' : '' }}>Fukushima</option>
                         </optgroup>
+
                         <optgroup label="Kanto">
-                            <option value="Ibaraki" {{ old('prefecture', $post->prefecture) == 'Ibaraki' ? 'selected' : '' }}>Ibaraki</option>
-                            <option value="Tochigi" {{ old('prefecture', $post->prefecture) == 'Tochigi' ? 'selected' : '' }}>Tochigi</option>
-                            <option value="Gunma" {{ old('prefecture', $post->prefecture) == 'Gunma' ? 'selected' : '' }}>Gunma</option>
-                            <option value="Saitama" {{ old('prefecture', $post->prefecture) == 'Saitama' ? 'selected' : '' }}>Saitama</option>
-                            <option value="Chiba" {{ old('prefecture', $post->prefecture) == 'Chiba' ? 'selected' : '' }}>Chiba</option>
-                            <option value="Tokyo" {{ old('prefecture', $post->prefecture) == 'Tokyo' ? 'selected' : '' }}>Tokyo</option>
-                            <option value="Kanagawa" {{ old('prefecture', $post->prefecture) == 'Kanagawa' ? 'selected' : '' }}>Kanagawa</option>
+                            <option value="Ibaraki" {{ old('prefecture') == 'Ibaraki' ? 'selected' : '' }}>Ibaraki</option>
+                            <option value="Tochigi" {{ old('prefecture') == 'Tochigi' ? 'selected' : '' }}>Tochigi</option>
+                            <option value="Gunma" {{ old('prefecture') == 'Gunma' ? 'selected' : '' }}>Gunma</option>
+                            <option value="Saitama" {{ old('prefecture') == 'Saitama' ? 'selected' : '' }}>Saitama</option>
+                            <option value="Chiba" {{ old('prefecture') == 'Chiba' ? 'selected' : '' }}>Chiba</option>
+                            <option value="Tokyo" {{ old('prefecture') == 'Tokyo' ? 'selected' : '' }}>Tokyo</option>
+                            <option value="Kanagawa" {{ old('prefecture') == 'Kanagawa' ? 'selected' : '' }}>Kanagawa</option>
                         </optgroup>
+
                         <optgroup label="Chubu">
-                            <option value="Niigata" {{ old('prefecture', $post->prefecture) == 'Niigata' ? 'selected' : '' }}>Niigata</option>
-                            <option value="Toyama" {{ old('prefecture', $post->prefecture) == 'Toyama' ? 'selected' : '' }}>Toyama</option>
-                            <option value="Ishikawa" {{ old('prefecture', $post->prefecture) == 'Ishikawa' ? 'selected' : '' }}>Ishikawa</option>
-                            <option value="Fukui" {{ old('prefecture', $post->prefecture) == 'Fukui' ? 'selected' : '' }}>Fukui</option>
-                            <option value="Yamanashi" {{ old('prefecture', $post->prefecture) == 'Yamanashi' ? 'selected' : '' }}>Yamanashi</option>
-                            <option value="Nagano" {{ old('prefecture', $post->prefecture) == 'Nagano' ? 'selected' : '' }}>Nagano</option>
-                            <option value="Gifu" {{ old('prefecture', $post->prefecture) == 'Gifu' ? 'selected' : '' }}>Gifu</option>
-                            <option value="Shizuoka" {{ old('prefecture', $post->prefecture) == 'Shizuoka' ? 'selected' : '' }}>Shizuoka</option>
-                            <option value="Aichi" {{ old('prefecture', $post->prefecture) == 'Aichi' ? 'selected' : '' }}>Aichi</option>
+                            <option value="Niigata" {{ old('prefecture') == 'Niigata' ? 'selected' : '' }}>Niigata</option>
+                            <option value="Toyama" {{ old('prefecture') == 'Toyama' ? 'selected' : '' }}>Toyama</option>
+                            <option value="Ishikawa" {{ old('prefecture') == 'Ishikawa' ? 'selected' : '' }}>Ishikawa</option>
+                            <option value="Fukui" {{ old('prefecture') == 'Fukui' ? 'selected' : '' }}>Fukui</option>
+                            <option value="Yamanashi" {{ old('prefecture') == 'Yamanashi' ? 'selected' : '' }}>Yamanashi</option>
+                            <option value="Nagano" {{ old('prefecture') == 'Nagano' ? 'selected' : '' }}>Nagano</option>
+                            <option value="Gifu" {{ old('prefecture') == 'Gifu' ? 'selected' : '' }}>Gifu</option>
+                            <option value="Shizuoka" {{ old('prefecture') == 'Shizuoka' ? 'selected' : '' }}>Shizuoka</option>
+                            <option value="Aichi" {{ old('prefecture') == 'Aichi' ? 'selected' : '' }}>Aichi</option>
                         </optgroup>
+
                         <optgroup label="Kinki">
-                            <option value="Mie" {{ old('prefecture', $post->prefecture) == 'Mie' ? 'selected' : '' }}>Mie</option>
-                            <option value="Shiga" {{ old('prefecture', $post->prefecture) == 'Shiga' ? 'selected' : '' }}>Shiga</option>
-                            <option value="Kyoto" {{ old('prefecture', $post->prefecture) == 'Kyoto' ? 'selected' : '' }}>Kyoto</option>
-                            <option value="Osaka" {{ old('prefecture', $post->prefecture) == 'Osaka' ? 'selected' : '' }}>Osaka</option>
-                            <option value="Hyogo" {{ old('prefecture', $post->prefecture) == 'Hyogo' ? 'selected' : '' }}>Hyogo</option>
-                            <option value="Nara" {{ old('prefecture', $post->prefecture) == 'Nara' ? 'selected' : '' }}>Nara</option>
-                            <option value="Wakayama" {{ old('prefecture', $post->prefecture) == 'Wakayama' ? 'selected' : '' }}>Wakayama</option>
+                            <option value="Mie" {{ old('prefecture') == 'Mie' ? 'selected' : '' }}>Mie</option>
+                            <option value="Shiga" {{ old('prefecture') == 'Shiga' ? 'selected' : '' }}>Shiga</option>
+                            <option value="Kyoto" {{ old('prefecture') == 'Kyoto' ? 'selected' : '' }}>Kyoto</option>
+                            <option value="Osaka" {{ old('prefecture') == 'Osaka' ? 'selected' : '' }}>Osaka</option>
+                            <option value="Hyogo" {{ old('prefecture') == 'Hyogo' ? 'selected' : '' }}>Hyogo</option>
+                            <option value="Nara" {{ old('prefecture') == 'Nara' ? 'selected' : '' }}>Nara</option>
+                            <option value="Wakayama" {{ old('prefecture') == 'Wakayama' ? 'selected' : '' }}>Wakayama</option>
                         </optgroup>
+
                         <optgroup label="Chugoku & Shikoku">
-                            <option value="Tottori" {{ old('prefecture', $post->prefecture) == 'Tottori' ? 'selected' : '' }}>Tottori</option>
-                            <option value="Shimane" {{ old('prefecture', $post->prefecture) == 'Shimane' ? 'selected' : '' }}>Shimane</option>
-                            <option value="Okayama" {{ old('prefecture', $post->prefecture) == 'Okayama' ? 'selected' : '' }}>Okayama</option>
-                            <option value="Hiroshima" {{ old('prefecture', $post->prefecture) == 'Hiroshima' ? 'selected' : '' }}>Hiroshima</option>
-                            <option value="Yamaguchi" {{ old('prefecture', $post->prefecture) == 'Yamaguchi' ? 'selected' : '' }}>Yamaguchi</option>
-                            <option value="Tokushima" {{ old('prefecture', $post->prefecture) == 'Tokushima' ? 'selected' : '' }}>Tokushima</option>
-                            <option value="Kagawa" {{ old('prefecture', $post->prefecture) == 'Kagawa' ? 'selected' : '' }}>Kagawa</option>
-                            <option value="Ehime" {{ old('prefecture', $post->prefecture) == 'Ehime' ? 'selected' : '' }}>Ehime</option>
-                            <option value="Kochi" {{ old('prefecture', $post->prefecture) == 'Kochi' ? 'selected' : '' }}>Kochi</option>
+                            <option value="Tottori" {{ old('prefecture') == 'Tottori' ? 'selected' : '' }}>Tottori</option>
+                            <option value="Shimane" {{ old('prefecture') == 'Shimane' ? 'selected' : '' }}>Shimane</option>
+                            <option value="Okayama" {{ old('prefecture') == 'Okayama' ? 'selected' : '' }}>Okayama</option>
+                            <option value="Hiroshima" {{ old('prefecture') == 'Hiroshima' ? 'selected' : '' }}>Hiroshima</option>
+                            <option value="Yamaguchi" {{ old('prefecture') == 'Yamaguchi' ? 'selected' : '' }}>Yamaguchi</option>
+                            <option value="Tokushima" {{ old('prefecture') == 'Tokushima' ? 'selected' : '' }}>Tokushima</option>
+                            <option value="Kagawa" {{ old('prefecture') == 'Kagawa' ? 'selected' : '' }}>Kagawa</option>
+                            <option value="Ehime" {{ old('prefecture') == 'Ehime' ? 'selected' : '' }}>Ehime</option>
+                            <option value="Kochi" {{ old('prefecture') == 'Kochi' ? 'selected' : '' }}>Kochi</option>
                         </optgroup>
+
                         <optgroup label="Kyushu & Okinawa">
-                            <option value="Fukuoka" {{ old('prefecture', $post->prefecture) == 'Fukuoka' ? 'selected' : '' }}>Fukuoka</option>
-                            <option value="Saga" {{ old('prefecture', $post->prefecture) == 'Saga' ? 'selected' : '' }}>Saga</option>
-                            <option value="Nagasaki" {{ old('prefecture', $post->prefecture) == 'Nagasaki' ? 'selected' : '' }}>Nagasaki</option>
-                            <option value="Kumamoto" {{ old('prefecture', $post->prefecture) == 'Kumamoto' ? 'selected' : '' }}>Kumamoto</option>
-                            <option value="Oita" {{ old('prefecture', $post->prefecture) == 'Oita' ? 'selected' : '' }}>Oita</option>
-                            <option value="Miyazaki" {{ old('prefecture', $post->prefecture) == 'Miyazaki' ? 'selected' : '' }}>Miyazaki</option>
-                            <option value="Kagoshima" {{ old('prefecture', $post->prefecture) == 'Kagoshima' ? 'selected' : '' }}>Kagoshima</option>
-                            <option value="Okinawa" {{ old('prefecture', $post->prefecture) == 'Okinawa' ? 'selected' : '' }}>Okinawa</option>
+                            <option value="Fukuoka" {{ old('prefecture') == 'Fukuoka' ? 'selected' : '' }}>Fukuoka</option>
+                            <option value="Saga" {{ old('prefecture') == 'Saga' ? 'selected' : '' }}>Saga</option>
+                            <option value="Nagasaki" {{ old('prefecture') == 'Nagasaki' ? 'selected' : '' }}>Nagasaki</option>
+                            <option value="Kumamoto" {{ old('prefecture') == 'Kumamoto' ? 'selected' : '' }}>Kumamoto</option>
+                            <option value="Oita" {{ old('prefecture') == 'Oita' ? 'selected' : '' }}>Oita</option>
+                            <option value="Miyazaki" {{ old('prefecture') == 'Miyazaki' ? 'selected' : '' }}>Miyazaki</option>
+                            <option value="Kagoshima" {{ old('prefecture') == 'Kagoshima' ? 'selected' : '' }}>Kagoshima</option>
+                            <option value="Okinawa" {{ old('prefecture') == 'Okinawa' ? 'selected' : '' }}>Okinawa</option>
                         </optgroup>
                     </select>
 
@@ -398,181 +393,78 @@
                 </div>
             </div>
 
-            <div class="mb-4" style="width: 50%;">
-                <label for="cost" class="form-label post-label">Cost</label>
+           {{-- Cost --}}
+            <div class="mb-4" style="width: 60%;">
+                <label class="post-label" for="cost-slider">Cost</label>
                 <div class="range-wrap">
-                    <span class="cost-display">¥0</span>
-                    {{-- 既存データまたはold()の値を表示 --}}
-                    <input type="range" class="range-input" id="cost-slider" name="cost" min="0" max="30000" step="100" value="{{ old('cost', $post->cost) }}" oninput="document.getElementById('cost-current').textContent = '¥' + this.value">
-                    <span class="cost-display" id="cost-current">¥{{ old('cost', $post->cost) }}</span>
+                    <span class="cost-display" id="cost-current">¥100</span>
+                    <input id="cost-slider" name="cost" type="range" min="0" max="10000" step="100" value="100" class="range-input">
                 </div>
             </div>
 
+            {{-- Image --}}
             <div class="mb-4">
-                <label for="file-upload" class="form-label post-label">Image</label>
-                
+                <label class="post-label" for="file-upload">Images (up to 3)</label>
                 <div class="image-controls">
-                    <label for="file-upload" class="image-btn">+Add</label>
-                    <input type="file" id="file-upload" name="image[]" multiple accept="image/*" style="display: none;" onchange="previewImages(event)">
-                    <span class="text-muted small">Choose the file</span>
-                    <span class="text-muted small image-name-display" style="margin-left: 5px;">image</span>
+                    <label for="file-upload" class="image-btn">+ Add</label>
+                    <input id="file-upload" name="image[]" type="file" accept="image/*" multiple hidden>
                 </div>
-
-                @error('image')
-                    <div class="text-danger small mt-1">{{ $message }}</div>
-                @enderror
-                
-                <div id="image-info" class="form-text small" style="color: #9F6B46; margin-top: 5px;">
-                    The acceptable formats are jpeg, jpg, png, gif only. <br>
-                    Max file size is 1024kb.
-                </div>
-
-                <div class="image-preview-area" id="image-previews">
-                    {{-- ★既存の画像をここに表示するロジック★ --}}
-                    @if ($post->images)
-                        @foreach ($post->images as $index => $image)
-                            <div class="image-item selected-image-preview" data-index="{{ $index }}" data-path="{{ $image->path }}">
-                                <img src="{{ $image->path }}" alt="Current Image {{ $index + 1 }}">
-                                <span class="remove-btn" onclick="removeExistingImage(this, '{{ $image->path }}')">×</span>
-                            </div>
-                        @endforeach
-                    @endif
-                    
-                    </div>
+                <div id="image-previews" class="image-preview-area"></div>
             </div>
-            
+
+            {{-- Footer --}}
             <div class="form-footer">
-                <button type="button" class="btn btn-cancel" onclick="window.history.back()">Cancel</button>
-                <button type="submit" class="btn btn-post text-white">Save</button>
+                <button type="button" class="btn-cancel" onclick="window.history.back()">Cancel</button>
+                <button type="submit" class="btn-post">Post</button>
             </div>
         </form>
     </div>
 </div>
 
 <script>
+document.addEventListener('DOMContentLoaded', function() {
     const MAX_IMAGES = 3;
-    let existingImagePaths = []; // 既存の画像パスを格納するための配列 (JS削除処理用)
+    const input = document.getElementById('file-upload');
+    const previewArea = document.getElementById('image-previews');
+    const costSlider = document.getElementById('cost-slider');
+    const costDisplay = document.getElementById('cost-current');
 
-    document.addEventListener('DOMContentLoaded', function() {
-        // Costスライダーの初期値を設定
-        const slider = document.getElementById('cost-slider');
-        const output = document.getElementById('cost-current');
-        if (slider && output) {
-             // DOMContentLoadedでスライダーの値を表示に反映
-             output.textContent = '¥' + slider.value;
-        }
-        
-        // 既存の画像パスを収集（削除ロジックがPostControllerに必要）
-        document.querySelectorAll('.selected-image-preview').forEach(item => {
-            existingImagePaths.push(item.getAttribute('data-path'));
-        });
-        
-        // 初期画像カウントをUIに反映
-        const nameDisplay = document.querySelector('.image-name-display');
-        const initialCount = existingImagePaths.length;
-        if (nameDisplay && initialCount > 0) {
-             nameDisplay.textContent = `${initialCount} images selected (Max ${MAX_IMAGES})`;
-        }
+    // コストスライダー更新
+    costSlider.addEventListener('input', () => {
+        costDisplay.textContent = '¥' + costSlider.value;
     });
 
-    /**
-     * 既存の画像を削除する処理（フロントエンドのみ）
-     * 実際の削除ロジックはコントローラー側で hidden input などを使って実装が必要です。
-     */
-    function removeExistingImage(element, path) {
-        if (confirm('Are you sure you want to remove this image?')) {
-            // 1. DOMから要素を削除
-            element.closest('.image-item').remove();
-            
-            // 2. 既存画像パス配列から削除
-            const index = existingImagePaths.indexOf(path);
-            if (index > -1) {
-                existingImagePaths.splice(index, 1);
-            }
+    // 画像プレビュー処理
+    input.addEventListener('change', function(e) {
+        const files = Array.from(e.target.files);
+        const existing = previewArea.querySelectorAll('.image-item').length;
+        const addable = Math.min(files.length, MAX_IMAGES - existing);
 
-            // 3. UIとカウントを更新
-            const remainingImages = document.getElementById('image-previews').querySelectorAll('.image-item').length;
-            const nameDisplay = document.querySelector('.image-name-display');
-            if (nameDisplay) {
-                nameDisplay.textContent = remainingImages > 0 ? `${remainingImages} images selected (Max ${MAX_IMAGES})` : 'image';
-            }
-
-            // ★重要★ ここでhidden inputを使って、サーバーに「どの既存画像を削除したか」を伝えるロジックが必要です。
-            // 例: document.getElementById('deleted_images').value += path + ',';
-        }
-    }
-
-
-    /**
-     * 選択されたファイルを読み込み、プレビューエリアに表示する関数
-     */
-    function previewImages(event) {
-        const fileInput = event.target;
-        let newFiles = Array.from(fileInput.files);
-        
-        const currentTotal = document.getElementById('image-previews').querySelectorAll('.image-item').length;
-        
-        // 既存画像と新規アップロードの合計が制限を超えていないかチェック
-        if (currentTotal + newFiles.length > MAX_IMAGES) {
-            const allowed = MAX_IMAGES - currentTotal;
-            if (allowed <= 0) {
-                 alert(`Cannot add more images. Maximum of ${MAX_IMAGES} images reached.`);
-                 fileInput.value = ''; // ファイル入力をクリア
-                 return;
-            }
-            alert(`You can only add ${allowed} more image(s). Only the first ${allowed} selected will be used.`);
-            newFiles = newFiles.slice(0, allowed);
-        }
-
-        const previewArea = document.getElementById('image-previews');
-        const nameDisplay = document.querySelector('.image-name-display');
-        
-        // ファイル入力の値をそのまま維持し、新しいファイルのみをDOMに追加
-        
-        // 選択された各ファイルを処理
-        newFiles.forEach((file, i) => {
+        files.slice(0, addable).forEach(file => {
             const reader = new FileReader();
-
-            reader.onload = function(e) {
-                const itemDiv = document.createElement('div');
-                itemDiv.className = 'image-item';
-                itemDiv.setAttribute('data-new-file', 'true'); // 新規アップロードの目印
+            reader.onload = function(ev) {
+                const div = document.createElement('div');
+                div.classList.add('image-item');
 
                 const img = document.createElement('img');
-                img.src = e.target.result;
-                img.alt = 'New Image Preview ' + (i + 1);
+                img.src = ev.target.result;
 
                 const removeBtn = document.createElement('span');
-                removeBtn.className = 'remove-btn';
-                removeBtn.innerHTML = '×';
-                
-                removeBtn.onclick = function() { 
-                    itemDiv.remove();
-                    
-                    // UI上のカウントを更新
-                    const remainingImages = previewArea.querySelectorAll('.image-item').length;
-                    if (nameDisplay) {
-                        nameDisplay.textContent = remainingImages > 0 ? `${remainingImages} images selected (Max ${MAX_IMAGES})` : 'image';
-                    }
-                    
-                    // NOTE: 新規ファイルの削除はfile inputのFilesリストから削除する必要があるため、
-                    // 現状はDOM削除のみとし、ユーザーにはフォームを再選択してもらうか、
-                    // FileListを操作する複雑なJSロジックが必要です。
-                };
-                
-                itemDiv.appendChild(img);
-                itemDiv.appendChild(removeBtn);
-                previewArea.appendChild(itemDiv);
-            };
+                removeBtn.classList.add('remove-btn');
+                removeBtn.textContent = '×';
+                removeBtn.onclick = () => div.remove();
 
+                div.appendChild(img);
+                div.appendChild(removeBtn);
+                previewArea.appendChild(div);
+            };
             reader.readAsDataURL(file);
         });
-        
-        // UI上のカウントを更新
-        const finalCount = previewArea.querySelectorAll('.image-item').length;
-        if (nameDisplay) {
-            nameDisplay.textContent = `${finalCount} images selected (Max ${MAX_IMAGES})`;
-        }
-    }
+
+        // ファイルリセット（再度同じファイル選択可能に）
+        input.value = '';
+    });
+});
 </script>
+
 @endsection
