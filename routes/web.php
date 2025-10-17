@@ -27,11 +27,11 @@ route::get('/message', function () {
     return view('message');
 });
 
-route::get('/favorites', function(){
+route::get('/favorites', function () {
     return view('favorite');
 });
 
-route::get('/followers', function(){
+route::get('/followers', function () {
     return view('followers_followings');
 });
 
